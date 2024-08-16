@@ -1,0 +1,125 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body onload="onInit()">
+    <header class="main-header">
+        <div class="main-header-content">
+            <h1 class="logo">Meme Gen</h1>
+            <nav class="main-nav">
+                <button class="hamburger-btn" onclick="toggleMenu()">&#9776;</button> 
+                <ul class="main-nav-list">
+                    <li><button class="nav-btn gallery-btn" onclick="onOpenGallery()">Gallery</button></li>
+                    <li><button class="nav-btn saved-btn" onclick="onOpenSaved()">Saved</button></li>
+                    <li><button class="nav-btn rand-btn" onclick="generateRandomMeme()">Randomize</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="new-gallery">
+        <div class="keyword-search">
+            <div id="keyword-container">
+                <span class="keyword" onclick="filterByKeyword('Funny')">Funny</span>
+                <span class="keyword" onclick="filterByKeyword('Animal')">Animal</span>
+                <span class="keyword" onclick="filterByKeyword('Bad')">Bad</span>
+                <span class="keyword" onclick="filterByKeyword('HAPPY')">HAPPY</span>
+            </div>
+        </div>
+        <div id="gallery-filter-container">
+            <input type="text" id="gallery-filter" placeholder="Filter images...">
+            <datalist id="gallery-keywords"></datalist>
+        </div>
+      
+        <div>
+            <label for="image-upload" class="custom-file-upload">
+                <img src="icon/uplo2.jpeg" alt="Next Line" class="upload-img">
+            </label>
+            <input type="file" id="image-upload" accept="image/*" onchange="onImgInput(event)">
+        </div>
+        <section class="gallery"></section>
+    </section>
+
+    <main>
+        <section class="image-gallery"></section>
+        <section class="meme-editor">
+            <div class="canvas-container">
+                <canvas id="my-canvas" hidden></canvas>
+            </div>
+            <input type="text" class="meme-text" placeholder="Add Text Here" oninput="handleTextInput()">
+            <section class="button-controls">
+                <button class="add-line-btn" onclick="addLine()">
+                    <img src="icon/plus.png" alt="Add Line Icon" class="add-line-icon">
+                </button>
+                <button class="next-line-btn" onclick="nextLine()">
+                    <img src="icon/transfer.png" alt="Next Line" class="next-line-icon">
+                </button>
+                <button class="delete-line-btn" onclick="deleteLine()">
+                    <img src="icon/delete.png" alt="Delete Line Icon" class="delete-line-icon">
+                </button>
+            </section>
+            <section class="font-size-controls">
+                <button class="font-size-btn-dcr" onclick="changeFontSize('decrease')">
+                    <img src="icon/decrease font - icon.png" alt="Align Left">
+                </button>
+                <button class="font-size-btn-inr" onclick="changeFontSize('increase')">
+                    <img src="icon/increase font - icon.png" alt="Align Left">
+                </button>
+                <button class="text-align-btn-left" onclick="changeTextAlign('left')">
+                    <img src="icon/align-to-left.png" alt="Align Left">
+                </button>
+                <button class="text-align-btn-center" onclick="changeTextAlign('center')">
+                    <img src="icon/align-center.png" alt="Align Center">
+                </button>
+                <button class="text-align-btn-right" onclick="changeTextAlign('right')">
+                    <img src="icon/align-to-right.png" alt="Align Right">
+                </button>
+                <input type="color" class="text-color" onchange="handleColorChange()">
+                <select class="font-family" onchange="setLineFontFamily(this.value)">
+                    <option value="Arial">Arial</option>
+                    <option value="Impact">Impact</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+            </section>
+            <section class="download-save-section">
+
+                <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">
+                    <img src="icon/download.png" alt="Download Icon" class="download-icon">
+                </a>
+                <a class="save-link" href="#" onclick="onSaveMeme()">
+                    <img src="icon/save.png" alt="Save Meme Icon" class="save-icon">
+                </a>
+                <button class="save-link" onclick="onUploadImg()">
+                    <img src="icon/facebook-share-extension-chrome.webp" alt="facebook-share">
+                </button>
+            </div>
+            <div class="emoji-picker" style="display: none;"></div>
+            <button class="save-link" onclick="toggleEmojiPicker()">
+                <img src="icon/smile.png" alt="emoji-picker">
+            </button>
+            </section>
+            <div class="message-modal hidden">Saved Meme Successfully</div>
+        </section>          
+    </main>
+
+    <section class="saved-page hidden">
+        <section class="saved-container"></section>
+    </section>
+
+    <script src="main.js"></script>
+    <script src="Service/memeService.js"></script>
+    <script src="Service/storageService.js"></script>
+    <script src="Controller/memeController.js"></script>
+    <script src="Controller/galleryController.js"></script>
+    <script src="Controller/savedController.js"></script>
+</body>
+</html>
